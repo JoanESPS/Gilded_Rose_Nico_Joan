@@ -61,5 +61,44 @@ class GildedRoseTest(unittest.TestCase):
         # Assert
         self.assertEqual(8, items[0].quality)
 
+    def test_brie_quality_post_update(self):
+        # Arrange
+        items = [Item("Aged Brie", 10, 25)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(26, items[0].quality)
+
+    def test_brie_quality_limitee_a_50(self):
+        # Arrange
+        items = [Item("Aged Brie", 10, 50)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(50, items[0].quality)
+
+    def test_sulfuras_pas_de_changement_de_quality_post_update(self):
+        # Arrange
+        items = [Item("Sulfuras, Hand of Ragnaros", 10, 80)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(80, items[0].quality)
+
+    def test_sulfuras_pas_de_changement_de_sell_in_post_update(self):
+        # Arrange
+        items = [Item("Sulfuras, Hand of Ragnaros", 10, 80)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(10, items[0].sell_in)
+
+
+
+
 if __name__ == '__main__':
     unittest.main()
