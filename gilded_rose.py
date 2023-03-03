@@ -21,43 +21,17 @@ class Item:
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
 
-class GildedRose(object):
+class GildedRose:
 
     def __init__(self, items):
         self.items = items
 
-    @abstractmethod
     def update_quality(self):
         for item in self.items:
-            if item.name not in [BRIE, BACKSTAGE_PASSES, SULFURAS]:
-                if item.quality > MIN_QUALITY:
-                    item.quality -= 1
-            else:
-                if item.quality < MAX_QUALITY:
-                    item.quality += 1
-                    if item.name == BACKSTAGE_PASSES:
-                        if item.sell_in < BACKSTAGE_SELL_IN_PREVENTE:
-                            if item.quality < MAX_QUALITY:
-                                item.quality += 1
-                        if item.sell_in < BACKSTAGE_SELL_IN_LAST_MINUTE:
-                            if item.quality < MAX_QUALITY:
-                                item.quality += 1
-            if item.name != SULFURAS:
-                item.sell_in -= 1
-            if item.sell_in < 0:
-                if item.name != BRIE:
-                    if item.name != BACKSTAGE_PASSES:
-                        if item.quality > MIN_QUALITY:
-                            if item.name != SULFURAS:
-                                item.quality -= 1
-                    else:
-                        item.quality = 0
-                else:
-                    if item.quality < MAX_QUALITY:
-                        item.quality += 1
+            item.update_quality()
 
 
-class SulfurasItem(Item, GildedRose):
+class SulfurasItem(Item):
     def __init__(self):
         super().__init__("Sulfuras, Hand of Ragnaros", 1000, 80)
 
@@ -70,15 +44,32 @@ class AgedBrieItem(Item):
         super().__init__("Aged Brie", sell_in, quality)
 
     def update_quality(self):
-        pass
+        self.sell_in -= 1
+        if self.quality < MAX_QUALITY:
+            self.quality += 1
 
 
 class BackstagePassItem(Item):
     def __init__(self, sell_in, quality):
         super().__init__("Backstage passes to a TAFKAL80ETC concert", sell_in, quality)
+        self.prevente = 10
+        self.last_minute = 5
+        self.after_concert = 0
 
     def update_quality(self):
-        pass
+        if self.sell_in > self.prevente:
+            self.quality += 1
+        elif self.last_minute < self.sell_in <= self.prevente:
+            self.quality += 2
+        elif self.after_concert < self.sell_in <= self.last_minute:
+            self.quality += 3
+        else:
+            self.quality = 0
+
+        if self.quality > MAX_QUALITY:
+            self.quality = MAX_QUALITY
+
+        self.sell_in -= 1
 
 
 class NormalItem(Item):
@@ -86,41 +77,19 @@ class NormalItem(Item):
         super().__init__(name, sell_in, quality)
 
     def update_quality(self):
-        pass
+        if self.sell_in < 0:
+            self.quality -= 2
+        else:
+            self.quality -= 1
+        if self.quality < 0:
+            self.quality = 0
+        self.sell_in -= 1
 
 
-class GildedRose(object):
-
-    def __init__(self, items):
-        self.items = items
-
-    @abstractmethod
-    def update_quality(self):
-        for item in self.items:
-            if item.name not in [BRIE, BACKSTAGE_PASSES, SULFURAS]:
-                if item.quality > MIN_QUALITY:
-                    item.quality -= 1
-            else:
-                if item.quality < MAX_QUALITY:
-                    item.quality += 1
-                    if item.name == BACKSTAGE_PASSES:
-                        if item.sell_in < BACKSTAGE_SELL_IN_PREVENTE:
-                            if item.quality < MAX_QUALITY:
-                                item.quality += 1
-                        if item.sell_in < BACKSTAGE_SELL_IN_LAST_MINUTE:
-                            if item.quality < MAX_QUALITY:
-                                item.quality += 1
-            if item.name != SULFURAS:
-                item.sell_in -= 1
-            if item.sell_in < 0:
-                if item.name != BRIE:
-                    if item.name != BACKSTAGE_PASSES:
-                        if item.quality > MIN_QUALITY:
-                            if item.name != SULFURAS:
-                                item.quality -= 1
-                    else:
-                        item.quality = 0
-                else:
-                    if item.quality < MAX_QUALITY:
-                        item.quality += 1
-
+items = [NormalItem("abc", 5, 5), NormalItem("abc", 5, 0), AgedBrieItem(10, 10), AgedBrieItem(10, 50),
+         BackstagePassItem(20, 10), BackstagePassItem(10, 10), BackstagePassItem(5, 10), BackstagePassItem(-1, 10),
+         SulfurasItem(), BackstagePassItem(11, 30)]
+print(items)
+gildes = GildedRose(items)
+gildes.update_quality()
+print(items)

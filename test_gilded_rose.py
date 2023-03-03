@@ -52,9 +52,9 @@ class GildedRoseTest(unittest.TestCase):
         # Assert
         self.assertEqual(0, items[0].quality)
 
-    def test_normal_item_quality_baisse_de_deux_quand_sell_in_zero(self):
+    def test_normal_item_quality_baisse_de_deux_quand_sell_in_negatif(self):
         # Arrange
-        items = [NormalItem("foo", 0, 10)]
+        items = [NormalItem("foo", -1, 10)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
