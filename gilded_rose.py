@@ -3,12 +3,6 @@ from abc import abstractmethod, ABC
 
 MAX_QUALITY = 50
 MIN_QUALITY = 0
-BACKSTAGE_SELL_IN_PREVENTE = 11
-BACKSTAGE_SELL_IN_LAST_MINUTE = 6
-BACKSTAGE_SELL_IN_AFTER_CONCERT = 0
-BRIE = "Aged Brie"
-BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
-SULFURAS = "Sulfuras, Hand of Ragnaros"
 
 
 class Item:
@@ -21,21 +15,21 @@ class Item:
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
 
-class GildedRose:
+class Shop:
 
     def __init__(self, items):
         self.items = items
 
-    def update_quality(self):
+    def update(self):
         for item in self.items:
-            item.update_quality()
+            item.update()
 
 
 class SulfurasItem(Item):
     def __init__(self):
         super().__init__("Sulfuras, Hand of Ragnaros", 1000, 80)
 
-    def update_quality(self):
+    def update(self):
         pass
 
 
@@ -43,7 +37,7 @@ class AgedBrieItem(Item):
     def __init__(self, sell_in, quality):
         super().__init__("Aged Brie", sell_in, quality)
 
-    def update_quality(self):
+    def update(self):
         self.sell_in -= 1
         if self.quality < MAX_QUALITY:
             self.quality += 1
@@ -56,7 +50,7 @@ class BackstagePassItem(Item):
         self.last_minute = 5
         self.after_concert = 0
 
-    def update_quality(self):
+    def update(self):
         if self.sell_in > self.prevente:
             self.quality += 1
         elif self.last_minute < self.sell_in <= self.prevente:
@@ -76,7 +70,7 @@ class NormalItem(Item):
     def __init__(self, name, sell_in, quality):
         super().__init__(name, sell_in, quality)
 
-    def update_quality(self):
+    def update(self):
         if self.sell_in < 0:
             self.quality -= 2
         else:
@@ -84,12 +78,3 @@ class NormalItem(Item):
         if self.quality < 0:
             self.quality = 0
         self.sell_in -= 1
-
-
-items = [NormalItem("abc", 5, 5), NormalItem("abc", 5, 0), AgedBrieItem(10, 10), AgedBrieItem(10, 50),
-         BackstagePassItem(20, 10), BackstagePassItem(10, 10), BackstagePassItem(5, 10), BackstagePassItem(-1, 10),
-         SulfurasItem(), BackstagePassItem(11, 30)]
-print(items)
-gildes = GildedRose(items)
-gildes.update_quality()
-print(items)
