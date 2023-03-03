@@ -1,33 +1,33 @@
 # -*- coding: utf-8 -*-
 import unittest
-from gilded_rose import Item, GildedRose, SulfurasItem
+from gilded_rose import Item, GildedRose, SulfurasItem, NormalItem, BackstagePassItem, AgedBrieItem
 
 
 class GildedRoseTest(unittest.TestCase):
     def test_item_name(self):
         # Arrange
-        item = Item("foo", 0, 0)
+        item = NormalItem("foo", 0, 0)
         # Act
         # Assert
         self.assertEqual("foo", item.name)
 
     def test_item_sell_in(self):
         # Arrange
-        item = Item("foo", 10, 0)
+        item = NormalItem("foo", 10, 0)
         # Act
         # Assert
         self.assertEqual(10, item.sell_in)
 
     def test_item_quality(self):
         # Arrange
-        item = Item("foo", 0, 25)
+        item = NormalItem("foo", 0, 25)
         # Act
         # Assert
         self.assertEqual(25, item.quality)
 
     def test_normal_item_update_quality(self):
         # Arrange
-        items = [Item("foo", 10, 25)]
+        items = [NormalItem("foo", 10, 25)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -36,7 +36,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_normal_item_update_sell_in(self):
         # Arrange
-        items = [Item("foo", 10, 25)]
+        items = [NormalItem("foo", 10, 25)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -45,7 +45,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_normal_item_quality_non_negative_post_update(self):
         # Arrange
-        items = [Item("foo", 10, 0)]
+        items = [NormalItem("foo", 10, 0)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -54,7 +54,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_normal_item_quality_baisse_de_deux_quand_sell_in_zero(self):
         # Arrange
-        items = [Item("foo", 0, 10)]
+        items = [NormalItem("foo", 0, 10)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -63,7 +63,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_brie_quality_post_update(self):
         # Arrange
-        items = [Item("Aged Brie", 10, 25)]
+        items = [AgedBrieItem(10, 25)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -72,7 +72,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_brie_quality_limitee_a_50(self):
         # Arrange
-        items = [Item("Aged Brie", 10, 50)]
+        items = [AgedBrieItem(10, 50)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -99,7 +99,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_backstage_passes_quality_augmente_de_1_avec_sell_in_superieur_a_10(self):
         # Arrange
-        items = [Item("Backstage passes to a TAFKAL80ETC concert", 11, 30)]
+        items = [BackstagePassItem(11, 30)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -108,7 +108,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_backstage_passes_quality_augmente_de_2_avec_sell_in_inferieur_a_10(self):
         # Arrange
-        items = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 30)]
+        items = [BackstagePassItem(10, 30)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -117,7 +117,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_backstage_passes_quality_augmente_de_3_avec_sell_in_inferieur_a_5(self):
         # Arrange
-        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 30)]
+        items = [BackstagePassItem(5, 30)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -126,7 +126,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_backstage_passes_quality_passe_a_0_avec_sell_in_inferieur_a_0(self):
         # Arrange
-        items = [Item("Backstage passes to a TAFKAL80ETC concert", 0, 30)]
+        items = [BackstagePassItem(0, 30)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -135,7 +135,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_backstage_passes_quality_limitee_a_50(self):
         # Arrange
-        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 49)]
+        items = [BackstagePassItem(5, 49)]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
