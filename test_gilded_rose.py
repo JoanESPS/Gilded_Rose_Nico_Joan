@@ -97,8 +97,50 @@ class GildedRoseTest(unittest.TestCase):
         # Assert
         self.assertEqual(10, items[0].sell_in)
 
+    def test_backstage_passes_quality_augmente_de_1_avec_sell_in_superieur_a_10(self):
+        # Arrange
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 11, 30)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(31, items[0].quality)
 
+    def test_backstage_passes_quality_augmente_de_2_avec_sell_in_inferieur_a_10(self):
+        # Arrange
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 30)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(32, items[0].quality)
 
+    def test_backstage_passes_quality_augmente_de_3_avec_sell_in_inferieur_a_5(self):
+        # Arrange
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 30)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(33, items[0].quality)
+
+    def test_backstage_passes_quality_passe_a_0_avec_sell_in_inferieur_a_0(self):
+        # Arrange
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 0, 30)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(0, items[0].quality)
+
+    def test_backstage_passes_quality_limitee_a_50(self):
+        # Arrange
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 49)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(50, items[0].quality)
 
 if __name__ == '__main__':
     unittest.main()
