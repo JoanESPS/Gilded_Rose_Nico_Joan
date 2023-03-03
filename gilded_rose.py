@@ -47,7 +47,7 @@ class Item:
 
 
 
-item = [Item("foo",1,-5)]
+item = [Item("foo",0,0)]
 guild = GildedRose(item)
 guild.update_quality()
 print(item)

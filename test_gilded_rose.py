@@ -43,5 +43,23 @@ class GildedRoseTest(unittest.TestCase):
         # Assert
         self.assertEqual(9, items[0].sell_in)
 
+    def test_normal_item_quality_non_negative_post_update(self):
+        # Arrange
+        items = [Item("foo", 10, 0)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(0, items[0].quality)
+
+    def test_normal_item_quality_baisse_de_deux_quand_sell_in_zero(self):
+        # Arrange
+        items = [Item("foo", 0, 10)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(8, items[0].quality)
+
 if __name__ == '__main__':
     unittest.main()
