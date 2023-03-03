@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from abc import abstractmethod, ABC
 
-MAX_QUALITY = 50
-MIN_QUALITY = 0
+ITEM_MAX_QUALITY = 50
+ITEM_MIN_QUALITY = 0
 
 
 class Item:
@@ -39,7 +39,7 @@ class AgedBrieItem(Item):
 
     def update_item(self):
         self.sell_in -= 1
-        if self.quality < MAX_QUALITY:
+        if self.quality < ITEM_MAX_QUALITY:
             self.quality += 1
 
 
@@ -56,12 +56,12 @@ class BackstagePassItem(Item):
         elif self.is_last_minute:
             self.quality += 3
         elif self.is_after_concert:
-            self.quality = 0
+            self.quality = ITEM_MIN_QUALITY
         else:
             self.quality += 1
 
-        if self.quality > MAX_QUALITY:
-            self.quality = MAX_QUALITY
+        if self.quality > ITEM_MAX_QUALITY:
+            self.quality = ITEM_MAX_QUALITY
 
         self.sell_in -= 1
 
@@ -75,8 +75,8 @@ class NormalItem(Item):
             self.quality -= 2
         else:
             self.quality -= 1
-        if self.quality < 0:
-            self.quality = 0
+        if self.quality < ITEM_MIN_QUALITY:
+            self.quality = ITEM_MIN_QUALITY
         self.sell_in -= 1
 
 
@@ -89,6 +89,6 @@ class ConjuredItem(Item):
             self.quality -= 4
         else:
             self.quality -= 2
-        if self.quality < 0:
-            self.quality = 0
+        if self.quality < ITEM_MIN_QUALITY:
+            self.quality = ITEM_MIN_QUALITY
         self.sell_in -= 1
