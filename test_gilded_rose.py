@@ -30,7 +30,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [NormalItem("foo", 10, 25)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(24, items[0].quality)
 
@@ -39,7 +39,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [NormalItem("foo", 10, 25)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(9, items[0].sell_in)
 
@@ -48,7 +48,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [NormalItem("foo", 10, 0)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(0, items[0].quality)
 
@@ -57,7 +57,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [NormalItem("foo", -1, 10)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(8, items[0].quality)
 
@@ -66,7 +66,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [AgedBrieItem(10, 25)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(26, items[0].quality)
 
@@ -75,7 +75,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [AgedBrieItem(10, 50)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(50, items[0].quality)
 
@@ -84,7 +84,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [SulfurasItem()]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(80, items[0].quality)
 
@@ -93,7 +93,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [SulfurasItem()]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(1000, items[0].sell_in)
 
@@ -102,7 +102,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [BackstagePassItem(11, 30)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(31, items[0].quality)
 
@@ -111,7 +111,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [BackstagePassItem(10, 30)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(32, items[0].quality)
 
@@ -120,16 +120,16 @@ class GildedRoseTest(unittest.TestCase):
         items = [BackstagePassItem(5, 30)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(33, items[0].quality)
 
     def test_backstage_passes_quality_passe_a_0_avec_sell_in_inferieur_a_0(self):
         # Arrange
-        items = [BackstagePassItem(0, 30)]
+        items = [BackstagePassItem(-1, 30)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(0, items[0].quality)
 
@@ -138,7 +138,7 @@ class GildedRoseTest(unittest.TestCase):
         items = [BackstagePassItem(5, 49)]
         guild = Shop(items)
         # Act
-        guild.update()
+        guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(50, items[0].quality)
 

@@ -27,4 +27,4 @@ if __name__ == "__main__":
         for item in items:
             print(item)
         print("")
-        Shop(items).update()
+        Shop(items).update_all_items_in_shop()
