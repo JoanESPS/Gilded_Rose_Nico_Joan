@@ -25,6 +25,12 @@ class GildedRoseTest(unittest.TestCase):
         # Assert
         self.assertEqual(25, item.quality)
 
+    def test_item_quality_lt_0(self):
+        # Arrange
+        item = Item("foo", 0, -10)
+        # Act
+        # Assert
+        self.assertEqual(0, item.quality)
 
 if __name__ == '__main__':
     unittest.main()
