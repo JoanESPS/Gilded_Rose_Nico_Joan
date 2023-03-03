@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
-from gilded_rose import Item, GildedRose
+from gilded_rose import Item, GildedRose, SulfurasItem
 
 
 class GildedRoseTest(unittest.TestCase):
@@ -81,7 +81,7 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_sulfuras_pas_de_changement_de_quality_post_update(self):
         # Arrange
-        items = [Item("Sulfuras, Hand of Ragnaros", 10, 80)]
+        items = [SulfurasItem()]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
@@ -90,12 +90,12 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_sulfuras_pas_de_changement_de_sell_in_post_update(self):
         # Arrange
-        items = [Item("Sulfuras, Hand of Ragnaros", 10, 80)]
+        items = [SulfurasItem()]
         guild = GildedRose(items)
         # Act
         guild.update_quality()
         # Assert
-        self.assertEqual(10, items[0].sell_in)
+        self.assertEqual(1000, items[0].sell_in)
 
     def test_backstage_passes_quality_augmente_de_1_avec_sell_in_superieur_a_10(self):
         # Arrange

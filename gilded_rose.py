@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from abc import abstractmethod, ABC
 
 MAX_QUALITY = 50
 MIN_QUALITY = 0
@@ -8,6 +9,49 @@ BACKSTAGE_SELL_IN_AFTER_CONCERT = 0
 BRIE = "Aged Brie"
 BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
 SULFURAS = "Sulfuras, Hand of Ragnaros"
+
+
+class Item:
+    def __init__(self, name, sell_in, quality):
+        self.name = name
+        self.sell_in = sell_in
+        self.quality = quality
+
+    def __repr__(self):
+        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+
+class AbstractItem:
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def update_quality(self):
+        pass
+
+
+class SulfurasItem(Item, AbstractItem):
+    def __init__(self):
+        super().__init__("Sulfuras, Hand of Ragnaros", 1000, 80)
+
+    def update_quality(self):
+        pass
+
+
+class AgedBrieItem(Item, AbstractItem):
+    def __init__(self, sell_in, quality):
+        super().__init__("Aged Brie", sell_in, quality)
+
+    def update_quality(self):
+        pass
+
+
+class BackstagePassItem(Item, AbstractItem):
+    def __init__(self):
+        super().__init__()
+
+    def update_quality(self):
+        pass
 
 
 class GildedRose(object):
@@ -45,11 +89,5 @@ class GildedRose(object):
                         item.quality += 1
 
 
-class Item:
-    def __init__(self, name, sell_in, quality):
-        self.name = name
-        self.sell_in = sell_in
-        self.quality = quality
-
-    def __repr__(self):
-        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+item = SulfurasItem()
+print(item)
