@@ -44,3 +44,10 @@ class Item:
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+
+
+item = [Item("foo",1,-5)]
+guild = GildedRose(item)
+guild.update_quality()
+print(item)

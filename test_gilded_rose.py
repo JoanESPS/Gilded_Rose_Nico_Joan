@@ -25,12 +25,23 @@ class GildedRoseTest(unittest.TestCase):
         # Assert
         self.assertEqual(25, item.quality)
 
-    def test_item_quality_lt_0(self):
+    def test_normal_item_update_quality(self):
         # Arrange
-        item = Item("foo", 0, -10)
+        items = [Item("foo", 10, 25)]
+        guild = GildedRose(items)
         # Act
+        guild.update_quality()
         # Assert
-        self.assertEqual(0, item.quality)
+        self.assertEqual(24, items[0].quality)
+
+    def test_normal_item_update_sell_in(self):
+        # Arrange
+        items = [Item("foo", 10, 25)]
+        guild = GildedRose(items)
+        # Act
+        guild.update_quality()
+        # Assert
+        self.assertEqual(9, items[0].sell_in)
 
 if __name__ == '__main__':
     unittest.main()
