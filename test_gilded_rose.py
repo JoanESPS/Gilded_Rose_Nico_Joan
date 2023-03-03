@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
-from gilded_rose import Item, Shop, SulfurasItem, NormalItem, BackstagePassItem, AgedBrieItem
+from gilded_rose import Shop, SulfurasItem, NormalItem, BackstagePassItem, AgedBrieItem, ConjuredItem
 
 
 class GildedRoseTest(unittest.TestCase):
@@ -34,6 +34,15 @@ class GildedRoseTest(unittest.TestCase):
         # Assert
         self.assertEqual(24, items[0].quality)
 
+    def test_conjured_item_update_quality(self):
+        # Arrange
+        items = [ConjuredItem("foo", 10, 25)]
+        guild = Shop(items)
+        # Act
+        guild.update_all_items_in_shop()
+        # Assert
+        self.assertEqual(23, items[0].quality)
+
     def test_normal_item_update_sell_in(self):
         # Arrange
         items = [NormalItem("foo", 10, 25)]
@@ -60,6 +69,15 @@ class GildedRoseTest(unittest.TestCase):
         guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(8, items[0].quality)
+
+    def test_conjured_item_quality_baisse_de_quatre_quand_sell_in_negatif(self):
+        # Arrange
+        items = [ConjuredItem("foo", -1, 10)]
+        guild = Shop(items)
+        # Act
+        guild.update_all_items_in_shop()
+        # Assert
+        self.assertEqual(6, items[0].quality)
 
     def test_brie_quality_post_update(self):
         # Arrange
@@ -95,7 +113,7 @@ class GildedRoseTest(unittest.TestCase):
         # Act
         guild.update_all_items_in_shop()
         # Assert
-        self.assertEqual(1000, items[0].sell_in)
+        self.assertEqual("Not for sale !", items[0].sell_in)
 
     def test_backstage_passes_quality_augmente_de_1_avec_sell_in_superieur_a_10(self):
         # Arrange
@@ -141,6 +159,16 @@ class GildedRoseTest(unittest.TestCase):
         guild.update_all_items_in_shop()
         # Assert
         self.assertEqual(50, items[0].quality)
+
+    def test_special_item_a_le_bon_nom(self):
+        # Arrange
+        items = [BackstagePassItem(5, 49)]
+        guild = Shop(items)
+        # Act
+        guild.update_all_items_in_shop()
+        # Assert
+        self.assertEqual("Backstage passes to a TAFKAL80ETC concert", items[0].name)
+
 
 if __name__ == '__main__':
     unittest.main()

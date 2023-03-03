@@ -27,7 +27,7 @@ class Shop:
 
 class SulfurasItem(Item):
     def __init__(self):
-        super().__init__("Sulfuras, Hand of Ragnaros", 1000, 80)
+        super().__init__("Sulfuras, Hand of Ragnaros", "Not for sale !", 80)
 
     def update_item(self):
         pass
@@ -80,3 +80,15 @@ class NormalItem(Item):
         self.sell_in -= 1
 
 
+class ConjuredItem(Item):
+    def __init__(self, name, sell_in, quality):
+        super().__init__(name, sell_in, quality)
+
+    def update_item(self):
+        if self.sell_in < 0:
+            self.quality -= 4
+        else:
+            self.quality -= 2
+        if self.quality < 0:
+            self.quality = 0
+        self.sell_in -= 1
