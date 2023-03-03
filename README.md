@@ -1,6 +1,17 @@
 # Gilded_Rose_Nico_Joan
 TU 03/03/2023 - groupe Nicolas et Joan
 
+Installation et utilisation du programme:
+
+    Dans la console pour installer pytest:
+        pip install pytest
+        
+    Pour lancer les tests depuis le dossier du projet:
+        pytest
+        
+    Pour lancer les fixtures et observer le passage de plusieurs jours depuis le dossier du projet:
+        py texttest_fixture.py
+
 
 Smells identifiés:
 
@@ -15,6 +26,7 @@ Smells identifiés:
             - test qualité brie post update
             - test sell_in et qualité Sulfuras post update
             - test qualité backstage pass à moins de 10, 5 et 0 jours post update
+            - test qualité ConjuredItems
             
     gilded_rose:
         - if imbriqués
@@ -23,6 +35,7 @@ Smells identifiés:
         - complexité cognitive élevée sur certaines formules
         - O de SOLID non respecté (pas fermé a la modification)
         - D de SOLID non respecté (GildedRose dépend de Item)
+        - Clarification de noms de fonctions/classes
         
         
 Priorisation des modifications/ajouts/refactos:
@@ -31,5 +44,6 @@ Priorisation des modifications/ajouts/refactos:
     - Gestion des magic strings et numbers
     - Correction des formules à complexité cognitive élevée
     - Eclatement des if imbriqués
-    - Recheck du code pour vérifier qu'il n'y ait pas d'autres smells à modifiers
+    - Recheck du code pour vérifier qu'il n'y ait pas d'autres smells à modifier
+    - Clarification de noms de fonctions/classes
     - Respect de SOLID
