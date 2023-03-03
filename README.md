@@ -24,3 +24,12 @@ Smells identifiés:
         - O de SOLID non respecté (pas fermé a la modification)
         - D de SOLID non respecté (GildedRose dépend de Item)
         
+        
+Priorisation des modifications/ajouts/refactos:
+
+    - Ajout des tests manquants et correction du test existant
+    - Gestion des magic strings et numbers
+    - Correction des formules à complexité cognitive élevée
+    - Eclatement des if imbriqués
+    - Recheck du code pour vérifier qu'il n'y ait pas d'autres smells à modifiers
+    - Respect de SOLID
